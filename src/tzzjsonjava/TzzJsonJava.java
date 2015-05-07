@@ -6,6 +6,7 @@
 package tzzjsonjava;
 
 import com.google.gson.Gson;
+import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.Arrays;
@@ -30,7 +31,9 @@ public class TzzJsonJava
         port(168);
 
         //Set public resources
-        staticFileLocation("/public");
+        String workingDir = System.getProperty("user.dir");
+        System.out.println(workingDir);
+        externalStaticFileLocation(workingDir + File.separator + "public_html");
 
         //Loading methods
         splitString splitter = new splitString();
