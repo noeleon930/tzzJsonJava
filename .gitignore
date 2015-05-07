@@ -218,3 +218,4 @@ pip-log.txt
 #netbeans
 .jar
 .class
+build/built-jar.properties
