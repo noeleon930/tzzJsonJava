@@ -32,22 +32,36 @@ public class TzzJsonJava
 
         //Set public resources
         String workingDir = System.getProperty("user.dir");
-        System.out.println(workingDir);
         externalStaticFileLocation(workingDir + File.separator + "public_html");
 
-        //Loading methods
+        //Loading methods and data
         splitString splitter = new splitString();
-        List<stockField> stockList = new fromTzzData().makeStockObjectList();
+        final List<stockField> stockList = new fromTzzData().makeStockObjectList();
 
         //Home
-        get("/", (req, res) -> "Hello Tzz!");
+        get("/home", (req, res) -> "Hello Tzz!");
 
-        //Template Test
-        get("/html", (req, res) ->
+        //Handling static resources
+        get("/static", (req, res) -> res.body());
+
+        //Filter before Demo (for its csss or jss)
+        get("/demo/:theId", (req, res) ->
         {
-            res.type("text/html");
-            return new htmlRender().index();
+            String test = req.params(":theId");
+            if (test.matches("[0-9]+"))
+            {
+                return new timeSeriesData().makeTimeSeriesHTML(test);
+            }
+            else
+            {
+                //Hacking this shit for 1 hour >w<
+                res.redirect("/static/" + test);
+                return null;
+            }
         });
+
+        //tzzServerGenerate.js
+        get("/tzzServerGenerate.js", "application/javascript", (req, res) -> new timeSeriesData().makeTimeSeriesJS());
 
         //Split simple test
         get("/split", (req, res) ->

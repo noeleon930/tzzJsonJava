@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tzz Chart Demo</title>
+</head>
+
+<body>
+    <div>
+        <h2 id="bar"> </h2>
+    </div>
+    <div id="chart">
+    </div>
+
+    <!-- Load c3.css -->
+    <link href="c3.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Load d3.js and c3.js -->
+    <script src="d3.min.js" charset="utf-8"></script>
+    <script src="c3.min.js"></script>
+
+    <!-- Load jquery and do custom things in it -->
+    <script src="jquery.min.js"></script>
+    <!-- <script src="tzzServerGenerate.js"></script> -->
+    <!-- <script src="custom.js"></script> -->
+    <script>
+        var chart_global;
+        var chart_status = "area";
+
+        $.getJSON("/stream/id/{{theId_num}}", function(jsonData) {
+            var chart = c3.generate({
+                bindto: '#chart',
+                data: {
+                    json: jsonData,
+                    keys: {
+                        x: 'stock_dateStr',
+                        value: ['point_open', 'point_high', 'point_low', 'point_close'],
+                    },
+                    xFormat: '%Y%m%d',
+                    type: 'line'
+                },
+                point: {
+                    show: false
+                },
+                zoom: {
+                    enabled: true
+                },
+                axis: {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            fit: true,
+                            count: 50,
+                            culling: {
+                                max: 50
+                            },
+                            rotate: 80,
+                            format: '%Y%m%d'
+                        }
+                    }
+                }
+            });
+
+            chart_global = chart;
+        });
+    </script>
+</body>
+
+</html>

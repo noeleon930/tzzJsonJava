@@ -20,7 +20,7 @@ import java.util.stream.Stream;
  */
 public class fromTzzData
 {
-
+    
     public List<stockField> makeStockObjectList() throws IOException
     {
         //Loading file and make it to stream
@@ -35,7 +35,7 @@ public class fromTzzData
                 .map(s ->
                         {
                             List<String> a = splitter.nsplit(s, ";");
-
+                            
                             String id = a.get(0);
                             String name = a.get(1);
                             int date = Integer.parseInt(a.get(2));
@@ -43,11 +43,11 @@ public class fromTzzData
                             float high = Float.parseFloat("-".equals(a.get(4)) ? "0" : a.get(4));
                             float low = Float.parseFloat("-".equals(a.get(5)) ? "0" : a.get(5));
                             float close = Float.parseFloat("-".equals(a.get(6)) ? "0" : a.get(6));
-
-                            return new stockField(id, name, date, open, high, low, close);
+                            
+                            return new stockField(id, name, String.valueOf(date), date, open, high, low, close);
                 })
                 .collect(Collectors.toList());
-
+        
     }
-
+    
 }

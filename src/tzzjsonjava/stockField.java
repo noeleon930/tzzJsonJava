@@ -17,6 +17,7 @@ public class stockField
     //Data members
     private final String stock_id;
     private final String stock_name;
+    private final String stock_dateStr;
     private final int stock_date;
     private final float point_open;
     private final float point_high;
@@ -27,6 +28,7 @@ public class stockField
     public stockField(
             String stock_id,
             String stock_name,
+            String stock_dateStr,
             int stock_date,
             float point_open,
             float point_high,
@@ -35,6 +37,7 @@ public class stockField
     {
         this.stock_id = stock_id;
         this.stock_name = stock_name;
+        this.stock_dateStr = stock_dateStr;
         this.stock_date = stock_date;
         this.point_open = point_open;
         this.point_high = point_high;
