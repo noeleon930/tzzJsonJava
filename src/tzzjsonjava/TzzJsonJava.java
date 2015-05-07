@@ -29,12 +29,22 @@ public class TzzJsonJava
         //Set port
         port(168);
 
+        //Set public resources
+        staticFileLocation("/public");
+
         //Loading methods
         splitString splitter = new splitString();
         List<stockField> stockList = new fromTzzData().makeStockObjectList();
 
         //Home
         get("/", (req, res) -> "Hello Tzz!");
+
+        //Template Test
+        get("/html", (req, res) ->
+        {
+            res.type("text/html");
+            return new htmlRender().index();
+        });
 
         //Split simple test
         get("/split", (req, res) ->
