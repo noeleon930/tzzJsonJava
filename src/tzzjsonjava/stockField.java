@@ -23,6 +23,7 @@ public class stockField
     private final float point_high;
     private final float point_low;
     private final float point_close;
+    private final float point_average;
 
     //Constructor
     public stockField(
@@ -43,6 +44,7 @@ public class stockField
         this.point_high = point_high;
         this.point_low = point_low;
         this.point_close = point_close;
+        this.point_average = (this.point_open + this.point_high + this.point_low + this.point_close) / 4.0f;
     }
 
     public HashMap<String, Float> kbar()
@@ -125,5 +127,10 @@ public class stockField
     public float getPoint_close()
     {
         return this.point_close;
+    }
+
+    public float getPoint_average()
+    {
+        return this.point_average;
     }
 }

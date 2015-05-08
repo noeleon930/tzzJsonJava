@@ -105,6 +105,12 @@ public class TzzJsonJava
             return Arrays.toString(a.toArray());
         });
 
+        //For META query
+        get("/stream/meta", "application/json", (req, res) ->
+        {
+            return new metaQuery().queryFor(req.queryMap().toMap(), req.queryParams(), stockList);
+        });
+
         //For date query
         get("/stream/date/:theDate", "application/json", (req, res) ->
         {
