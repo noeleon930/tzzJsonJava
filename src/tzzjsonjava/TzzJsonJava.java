@@ -9,8 +9,10 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import static spark.Spark.*;
 
@@ -20,6 +22,19 @@ import static spark.Spark.*;
  */
 public class TzzJsonJava
 {
+
+    public static class stockSet
+    {
+
+        private final int id;
+        private final String name;
+
+        stockSet(String name, int id)
+        {
+            this.id = id;
+            this.name = name;
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -41,12 +56,17 @@ public class TzzJsonJava
         //Home
         get("/home", (req, res) -> "Hello Tzz!");
 
-        //Handling static resources
-        get("/static", (req, res) -> res.body());
+        //Demo Home
+        get("/demo/home", (req, res) ->
+        {
+            res.redirect("/static/DemoHome.tzzissocool");
+            return null;
+        });
 
         //Filter before Demo (for its csss or jss)
-        get("/demo/:theId", (req, res) ->
+        get("/demo/id/:theId", (req, res) ->
         {
+            //Checking if this is from template
             String test = req.params(":theId");
             if (test.matches("[0-9]+"))
             {
@@ -118,6 +138,23 @@ public class TzzJsonJava
                     .collect(Collectors.toList());
 
             return new Gson().toJson(tmp);
+        });
+
+        //Fot stock_set query (ask for name and id's collection)
+        get("/stream/stock_set", "application/json", (req, res) ->
+        {
+            Map<String, String> tmp = stockList
+                    .parallelStream()
+                    .collect(Collectors.toMap(s -> s.getStock_name(), s -> s.getStock_id(), (oldValue, newValue) -> oldValue));
+
+            List<stockSet> ttmp = new ArrayList<>();
+
+            tmp.forEach((k, v) ->
+            {
+                ttmp.add(new stockSet(k, Integer.parseInt(v)));
+            });
+
+            return new Gson().toJson(ttmp);
         });
     }
 

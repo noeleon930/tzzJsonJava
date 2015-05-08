@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tzz Chart Demo Home</title>
+    <script src="jquery.min.js"></script>
+    <script src="DemoHome.js"></script>
+    <link href="DemoHome.css" rel="stylesheet" type="text/css">
+</head>
+
+<body style="font-family: Verdana, Geneva, sans-serif; padding-left: 50px">
+    <h2>Select stock: </h2>
+    <div id="stocks" style="text-decoration: none;">
+        <!-- <a href="/demo/id/2384">勝華_2384</a> -->
+    </div>
+</body>
+
+</html>

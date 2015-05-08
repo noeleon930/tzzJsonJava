@@ -91,4 +91,39 @@ public class stockField
     {
         return (this.point_close == point_close);
     }
+
+    public String getStock_id()
+    {
+        return this.stock_id;
+    }
+
+    public String getStock_name()
+    {
+        return this.stock_name;
+    }
+
+    public int getStock_date()
+    {
+        return this.stock_date;
+    }
+
+    public float getPoint_open()
+    {
+        return this.point_open;
+    }
+
+    public float getPoint_high()
+    {
+        return this.point_high;
+    }
+
+    public float getPoint_low()
+    {
+        return this.point_low;
+    }
+
+    public float getPoint_close()
+    {
+        return this.point_close;
+    }
 }

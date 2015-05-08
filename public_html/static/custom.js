@@ -1,7 +1,4 @@
-var chart_global;
-var chart_status = "area";
-
-$.getJSON("/stream/id/1218", function(jsonData)
+$.getJSON("/stream/id/" + chart_id, function(jsonData)
 {
     var chart = c3.generate(
     {
@@ -21,9 +18,17 @@ $.getJSON("/stream/id/1218", function(jsonData)
         {
             show: false
         },
-        zoom:
+        size:
         {
-            enabled: true
+            height: 600
+        },
+        // zoom:
+        // {
+        //     enabled: true
+        // },
+        subchart:
+        {
+            show: true
         },
         axis:
         {
@@ -46,4 +51,6 @@ $.getJSON("/stream/id/1218", function(jsonData)
     });
 
     chart_global = chart;
+
+    $('#bar').html("&nbsp&nbsp&nbsp" + jsonData[0].stock_name);
 });
