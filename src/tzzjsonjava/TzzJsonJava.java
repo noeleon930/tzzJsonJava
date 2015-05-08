@@ -22,13 +22,13 @@ import static spark.Spark.*;
  */
 public class TzzJsonJava
 {
-
+    
     public static class stockSet
     {
-
+        
         private final int id;
         private final String name;
-
+        
         stockSet(String name, int id)
         {
             this.id = id;
@@ -80,6 +80,26 @@ public class TzzJsonJava
             }
         });
 
+        //Filter before Demo (for its csss or jss)
+        //Value is average only!
+        get("/demo/id/:theId/:avr", (req, res) ->
+        {
+            //Checking if this is from template
+            String test = req.params(":theId");
+            String staticF = req.params(":avr");
+            
+            if ("avr".equals(staticF) && test.matches("[0-9]+"))
+            {
+                return new timeSeriesData().makeTimeSeriesAverageHTML(test);
+            }
+            else
+            {
+                res.redirect("/static/" + staticF);
+                return null;
+            }
+            
+        });
+
         //tzzServerGenerate.js
         get("/tzzServerGenerate.js", "application/javascript", (req, res) -> new timeSeriesData().makeTimeSeriesJS());
 
@@ -87,9 +107,9 @@ public class TzzJsonJava
         get("/split", (req, res) ->
         {
             List<String> a = splitter.nsplit("helloooo, madartfarkers, yo!,,,,,,", ",");
-
+            
             a.forEach(System.out::println);
-
+            
             return Arrays.toString(a.toArray());
         });
 
@@ -97,11 +117,11 @@ public class TzzJsonJava
         get("/split/:string", (req, res) ->
         {
             String target = URLDecoder.decode(req.params(":string"), "UTF-8");
-
+            
             List<String> a = splitter.nsplit(target, ",");
-
+            
             a.forEach(System.out::println);
-
+            
             return Arrays.toString(a.toArray());
         });
 
@@ -118,7 +138,7 @@ public class TzzJsonJava
                     .parallelStream()
                     .filter(s -> s.equalDate(Integer.parseInt(req.params(":theDate"))))
                     .collect(Collectors.toList());
-
+            
             return new Gson().toJson(tmp);
         });
 
@@ -129,20 +149,26 @@ public class TzzJsonJava
                     .parallelStream()
                     .filter(s -> s.equalId(req.params(":theId")))
                     .collect(Collectors.toList());
-
+            
             return new Gson().toJson(tmp);
+        });
+
+        //Param split test
+        get("/:man/meets/:woman", "application/json", (req, res) ->
+        {
+            return req.params(":man") + " meets " + req.params(":woman");
         });
 
         //For name query
         get("/stream/name/:theName", "application/json", (req, res) ->
         {
             String target = URLDecoder.decode(req.params(":theName"), "UTF-8");
-
+            
             List<stockField> tmp = stockList
                     .parallelStream()
                     .filter(s -> s.equalName(target))
                     .collect(Collectors.toList());
-
+            
             return new Gson().toJson(tmp);
         });
 
@@ -152,16 +178,16 @@ public class TzzJsonJava
             Map<String, String> tmp = stockList
                     .parallelStream()
                     .collect(Collectors.toMap(s -> s.getStock_name(), s -> s.getStock_id(), (oldValue, newValue) -> oldValue));
-
+            
             List<stockSet> ttmp = new ArrayList<>();
-
+            
             tmp.forEach((k, v) ->
             {
                 ttmp.add(new stockSet(k, Integer.parseInt(v)));
             });
-
+            
             return new Gson().toJson(ttmp);
         });
     }
-
+    
 }

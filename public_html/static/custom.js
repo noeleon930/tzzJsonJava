@@ -1,3 +1,13 @@
+var chart_value;
+if(chart_average == true)
+{
+    chart_value = ['point_average'];
+}
+else
+{
+    chart_value = ['point_open', 'point_high', 'point_low', 'point_close'];
+}
+
 $.getJSON("/stream/id/" + chart_id, function(jsonData)
 {
     var chart = c3.generate(
@@ -9,7 +19,7 @@ $.getJSON("/stream/id/" + chart_id, function(jsonData)
             keys:
             {
                 x: 'stock_dateStr',
-                value: ['point_open', 'point_high', 'point_low', 'point_close'],
+                value: chart_value,
             },
             xFormat: '%Y%m%d',
             type: 'line'
