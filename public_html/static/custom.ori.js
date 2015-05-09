@@ -1,5 +1,5 @@
 var chart_value;
-if(chart_average == true)
+if (chart_average == true)
 {
     chart_value = ['point_average'];
 }
@@ -30,7 +30,7 @@ $.getJSON("/stream/id/" + chart_id, function(jsonData)
         },
         size:
         {
-            height: 600
+            height: $(window).height() * 0.78;
         },
         // zoom:
         // {
